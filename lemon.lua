@@ -1,8 +1,5 @@
 if not game:IsLoaded() then game.Loaded:Wait() end
 
--- ==========================================
--- LOAD WIND UI LIBRARY
--- ==========================================
 local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
 
 local RunService = game:GetService("RunService")
@@ -38,12 +35,11 @@ local Window = WindUI:CreateWindow({
     Folder = "WKWKHUB",
     Size = UDim2.fromOffset(520, 400),
     Transparent = true,
-    Theme = "Dark",
-    SideBarWidth = 160,
+    Theme = "Midnight",
+    SideBarWidth = 120,
     HasOutline = false
 })
 
--- FLOATING WKWKHUB BUTTON ("W")
 local ScreenGui = Instance.new("ScreenGui", (game:GetService("CoreGui") or LocalPlayer:WaitForChild("PlayerGui")))
 ScreenGui.Name = "WKWK_Toggle"
 local ToggleButton = Instance.new("TextButton", ScreenGui)
@@ -58,7 +54,6 @@ ToggleButton.Draggable = true
 Instance.new("UICorner", ToggleButton).CornerRadius = UDim.new(0, 12)
 Instance.new("UIStroke", ToggleButton).Color = Color3.fromRGB(170, 85, 255)
 
--- Buka/Tutup UI pakai WindUI Toggle API
 ToggleButton.MouseButton1Click:Connect(function() 
     Window:Toggle() 
 end)
@@ -66,20 +61,15 @@ end)
 local function DestroyUI(value)
     if value then task.wait(value) end
     if ScreenGui then ScreenGui:Destroy() end
-    -- WindUI belum punya API Destroy resmi yang stabil di semua versi,
-    -- jadi kita sembunyikan saja window-nya secara penuh jika DestroyUI dipanggil
     if Window then Window:Toggle() end 
 end
 
 local Tabs = {
     Main = Window:Tab({ Title = "Auto Farm", Icon = "play" }),
-    Settings = Window:Tab({ Title = "Auto Settings", Icon = "sliders" }),
+    Settings = Window:Tab({ Title = "Auto Settings", Icon = "repeat" }),
     Misc = Window:Tab({ Title = "Misc", Icon = "settings" })
 }
 
--- ==========================================
--- SCRIPT DATA & CORE LOGIC
--- ==========================================
 local ScriptData = {
     PlayerTycoon = nil, 
     Values = nil, 
@@ -125,7 +115,6 @@ local function FindTycoon()
     end
 end
 
--- Tycoon Initialization
 local StartTime = tick()
 repeat
     ScriptData.PlayerTycoon = FindTycoon()
@@ -203,11 +192,7 @@ local function WaitForResolve()
     Resolving = false
 end
 
--- ==========================================
--- AUTO FARM LOOPS
--- ==========================================
-
-task.spawn(function() -- auto buy buttons
+task.spawn(function() 
     local IsBusy = false
     local function BuyButtons()
         if IsBusy or Resolving then return end
@@ -244,7 +229,7 @@ task.spawn(function() -- auto buy buttons
     end
 end)
 
-task.spawn(function() -- auto upgrade
+task.spawn(function() 
     local UpgradeRemotes = {}
     local LastUpgradeScan = 0
     local function RefreshUpgradeRemotes()
@@ -272,7 +257,7 @@ task.spawn(function() -- auto upgrade
     end
 end)
 
-task.spawn(function() -- auto rebirth
+task.spawn(function()
     local RebirthBusy = false
     local LastConflictNotify = 0
     local LastUnableBuyTime = 0
@@ -396,7 +381,7 @@ task.spawn(function() -- auto rebirth
     end
 end)
 
-task.spawn(function() -- auto evolve loop
+task.spawn(function()
     local function TryEvolve() pcall(function() ScriptData.Remotes.Evolve:InvokeServer(); WaitForResolve() end) end
     while true do task.wait(0.5)
         if not ScriptData.AutoEvolve then continue end
@@ -524,11 +509,6 @@ task.spawn(function() -- auto collect fruits
     end
 end)
 
--- ==========================================
--- UI ELEMENTS (WIND UI)
--- ==========================================
-
--- TAB: MAIN (AUTO FARM)
 Tabs.Main:Section({ Title = "Tycoon Progress" })
 Tabs.Main:Toggle({ Title = "Auto Buy", Value = false, Callback = function(v) ScriptData.AutoBuy = v end })
 Tabs.Main:Toggle({ Title = "Auto Upgrade", Value = false, Callback = function(v) ScriptData.AutoUpgrade = v end })
@@ -542,7 +522,6 @@ Tabs.Main:Toggle({ Title = "Auto Accept Phone Offers", Value = false, Callback =
 Tabs.Main:Toggle({ Title = "Auto Wake Income Sources", Value = false, Callback = function(v) ScriptData.AutoWakeIncomeSources = v end })
 Tabs.Main:Toggle({ Title = "Collect Fruits", Value = false, Callback = function(v) ScriptData.AutoCollectFruits = v end })
 
--- TAB: SETTINGS (AUTO SETTINGS)
 Tabs.Settings:Section({ Title = "Auto Buy Settings" })
 Tabs.Settings:Input({ Title = "Buy Interval (in seconds)", Value = "0.05", PlaceholderText = "Numbers only", Callback = function(v)
     local n = tonumber(v)
@@ -586,7 +565,6 @@ Tabs.Settings:Input({ Title = "Max Evolve (0 = no max)", Value = "0", Placeholde
     if n and n >= 0 then ScriptData.MainSettings.Evolve.MaximumEvolution = n end
 end})
 
--- TAB: MISC
 Tabs.Misc:Section({ Title = "Extra" })
 Tabs.Misc:Toggle({ Title = "Disable 3D Rendering (FPS Boost)", Value = false, Callback = function(v)
     RunService:Set3dRenderingEnabled(not v)
