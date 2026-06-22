@@ -79,19 +79,16 @@ WindUI.Services.junkiedevelopment = {
     end
 }
 
-
 local Window = WindUI:CreateWindow({
     Title = "WKWKHUB",
     SubTitle = gameName,
     Icon = "terminal-square",
     Theme = "Midnight",
-    Size = UDim2.fromOffset(500, 320), 
     Transparent = true,
     Resizable = true,
-    ScrollBarEnable = true,
-
+    Folder = "WKWKHUB",
     KeySystem = {
-        Note = "Selamat datang di WKWKHUB!\nSilakan masukkan key untuk melanjutkan ke " .. gameName .. ".",
+        Note = "Silakan masukkan key untuk melanjutkan",
         SaveKey = true,
         API = {
             {
@@ -110,7 +107,7 @@ end
 
 WindUI:Notify({
     Title = "Verifikasi Berhasil!",
-    Content = "Key Valid" .. gameName .. "...",
+    Content = "Key Valid. Memuat script " .. gameName .. "...",
     Icon = "check-circle",
     Duration = 3
 })
