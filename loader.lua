@@ -30,6 +30,10 @@ elseif placeId == 126509999114328 then
 elseif placeId == 79268393072444 then 
     gameName = "Sell Lemons"
     scriptToLoad = "https://raw.githubusercontent.com/wkwkdoyyy/wkwkhub/refs/heads/main/lemon.lua"
+    
+elseif placeId == 128784467030899 then 
+    gameName = "Merge a Nuke"
+    scriptToLoad = "https://raw.githubusercontent.com/wkwkdoyyy/wkwkhub/refs/heads/main/nuke.lua"
 
 else
     Notify("Game ini tidak disupport!...")
