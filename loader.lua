@@ -39,6 +39,11 @@ elseif placeId == 120564326011184 then
     gameName = "Be a youtuber"
     scriptToLoad = "https://raw.githubusercontent.com/wkwkdoyyy/wkwkhub/refs/heads/main/youtube.lua"
 
+elseif placeId == 70876832253163 then 
+    gameName = "Dead Rails"
+    scriptToLoad = "https://raw.githubusercontent.com/wkwkdoyyy/wkwkhub/refs/heads/main/dr.lua"
+
+
 else
     Notify("Game ini tidak disupport!...")
     warn("[WKWKHUB] Game ini tidak terdaftar: " .. tostring(placeId))
