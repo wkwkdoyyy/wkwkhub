@@ -34,6 +34,10 @@ elseif placeId == 79268393072444 then
 elseif placeId == 128784467030899 then 
     gameName = "Merge a Nuke"
     scriptToLoad = "https://raw.githubusercontent.com/wkwkdoyyy/wkwkhub/refs/heads/main/nuke.lua"
+    
+elseif placeId == 120564326011184 then 
+    gameName = "Be a youtuber"
+    scriptToLoad = "https://raw.githubusercontent.com/wkwkdoyyy/wkwkhub/refs/heads/main/youtube.lua"
 
 else
     Notify("Game ini tidak disupport!...")
